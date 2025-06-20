@@ -357,6 +357,17 @@ export default function SigiloX() {
         body: JSON.stringify({ phone: phone }),
       })
 
+      // Check if response is ok first
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type")
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Response is not JSON")
+      }
+
       const data = await response.json()
 
       if (data.success) {
@@ -726,7 +737,7 @@ export default function SigiloX() {
                           className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover flex-shrink-0 border-2 border-gray-200 shadow-sm"
                           onError={(e) => {
                             e.currentTarget.src =
-                              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                           }}
                         />
                         <div className="flex-1 min-w-0 text-left">
@@ -761,7 +772,7 @@ export default function SigiloX() {
                           className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover flex-shrink-0 border-2 border-gray-200 shadow-sm"
                           onError={(e) => {
                             e.currentTarget.src =
-                              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
+                              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
                           }}
                         />
                         <div className="flex-1 min-w-0 text-left">
@@ -924,7 +935,7 @@ export default function SigiloX() {
                           </div>
                           <Input
                             type="tel"
-                            placeholder={`Número (ex: ${selectedCountry.placeholder})`}
+                            placeholder={`Number (ex: ${selectedCountry.placeholder})`}
                             value={phoneNumber}
                             onChange={(e) => {
                               const value = e.target.value
@@ -1567,7 +1578,7 @@ export default function SigiloX() {
                     See photos, conversations and exact location of the profile.
                   </p>
                   <Button
-                    onClick={() => window.open("https://global.mundpay.com/priyelxoql", "_blank")}
+                    onClick={() => setCurrentStep("offer")}
                     className="bg-gradient-to-r from-[#FF0066] to-[#FF3333] hover:from-[#FF0066] hover:to-[#FF3333] text-white font-bold py-3 sm:py-4 px-6 sm:px-8 text-base sm:text-lg rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 w-full touch-manipulation"
                   >
                     🔓 UNLOCK REPORT NOW
@@ -1631,7 +1642,13 @@ export default function SigiloX() {
                     <CardContent className="p-4 sm:p-8 space-y-6 sm:space-y-8">
                       {/* Price */}
                       <div className="text-center">
-                        <div className="text-4xl sm:text-5xl font-bold text-[#FF0066] mb-2 sm:mb-3">R$ 47,00</div>
+                        <div className="mb-3">
+                          <div className="text-2xl sm:text-3xl font-bold text-gray-400 line-through mb-1">$97.00</div>
+                          <div className="text-4xl sm:text-5xl font-bold text-[#FF0066] mb-2 sm:mb-3">$47.00</div>
+                          <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">
+                            <span>🔥 51% OFF - LIMITED TIME</span>
+                          </div>
+                        </div>
                         <p className="text-sm sm:text-base text-gray-500 font-medium">
                           Unique and lifetime access to the complete report.
                         </p>
@@ -1660,7 +1677,10 @@ export default function SigiloX() {
                       </div>
 
                       {/* Submit Button */}
-                      <Button className="w-full py-3 sm:py-4 text-base sm:text-lg font-bold rounded-xl bg-gradient-to-r from-[#FF0066] to-[#FF3333] hover:from-[#FF0066] hover:to-[#FF3333] text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 touch-manipulation">
+                      <Button
+                        onClick={() => window.open("https://global.mundpay.com/priyelxoql?src=yt", "_blank")}
+                        className="w-full py-3 sm:py-4 text-base sm:text-lg font-bold rounded-xl bg-gradient-to-r from-[#FF0066] to-[#FF3333] hover:from-[#FF0066] hover:to-[#FF3333] text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 touch-manipulation"
+                      >
                         💳 UNLOCK WITH SECURE PAYMENT
                       </Button>
 
